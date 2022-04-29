@@ -13,8 +13,6 @@ if ("riot_api_key" not in os.environ):
 else:
 	dev_key = os.environ["riot_api_key"]
 
-# dev_key = "RGAPI-5bdd1c02-1f38-4cc3-9610-aaa4b74e65b0" #Lester's Key
-
 def get_player_ids(summoner_name):
 	"""
 	Get player ids by summoner name
@@ -258,9 +256,10 @@ def match_crawler(input_csv, starting_puuid, n):
 
 	df.to_csv(input_csv, index = False)
 
-while True:
-	df_open = pd.read_csv("test.csv")
-	puuid_picker = random.choice(df_open["p" + str(random.randint(1, 10)) + "_puuid"].tolist())
-	match_crawler("test.csv", puuid_picker, 20)
-	print("Pull successful.")
-	time.sleep(120)
+# while True:
+# 	df_open = pd.read_csv("test.csv")
+# 	puuid_picker = random.choice(df_open["p" + str(random.randint(1, 10)) + "_puuid"].tolist())
+# 	match_crawler("test.csv", puuid_picker, 20)
+# 	print("Pull successful.")
+# 	time.sleep(120)
+# 	df_all.to_csv("./match_" + str(match_count) + ".csv", index = False)
