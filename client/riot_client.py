@@ -263,3 +263,4 @@ def match_crawler(input_csv, starting_puuid, n):
 # 	print("Pull successful.")
 # 	time.sleep(120)
 # 	df_all.to_csv("./match_" + str(match_count) + ".csv", index = False)
+#test pull recuset
