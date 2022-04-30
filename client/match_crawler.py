@@ -106,17 +106,47 @@ def generate_match_line(match_id):
 	df["gameMode"] = gameMode
 	return df
 
-
-# def match_crawler_without_csv(summoner_id):
-# 	#summoner_name as input
-# 	#assume no CSV
-# 	#generate puuid
-# 	#from summoner name grab riot api to get 1 match
-
-
-def match_crawler(input_csv, starting_puuid, n):
+def match_crawler(input_csv, summoner_id = "TyreeThePettiest"):	
 	"""
-	crawls n matches
+	If the CSV does not exist, one will be created for you.
+		If you provide a summoner id, the first line of data will be based on the provided summoner id
+		If you do not provide a summoner id, the first line of data will be based on TyreeThePettiest's id. This guy ONLY plays aram
+	Otherwise, appends to a particular CSV
+	"""
+
+	if os.path.isfile(input_csv) == False:
+		starting_puuid = get_puuid(summoner_id)
+		r = random.randint(5, 10) #grab a random match
+		matchId = get_match_ids(starting_puuid, r, r)[0]
+		print(matchId)
+		df_temp = generate_match_line(matchId)
+		# print(df_temp)
+		df_temp.to_csv(input_csv, index = False)
+	else:
+		try:
+			set_matchIds = set()
+			df = pd.read_csv(input_csv)
+			for i in df["matchId"]:
+				set_matchIds.add(i)
+
+			r = random.randint(1, 10)
+			chosen_col = df["p" + str(r) + "_puuid"].tolist()
+			puuid = random.choice(chosen_col) #choose a random puuid from the entire existing dataset
+
+			r = random.randint(5, 10) #grab a random match
+			matchId = get_match_ids(puuid, r, r)[0] #get the matchId for that random match]
+			print(matchId)
+			df_temp = generate_match_line(matchId)
+			if matchId not in set_matchIds and df_temp["gameMode"][0] == "ARAM":
+				df = concatenate(df, df_temp) 
+			set_matchIds.add(matchId)
+			df.to_csv(input_csv, index = False)
+		except: 
+			pass	
+
+def match_appender(input_csv, starting_puuid, n):
+	"""
+	crawls n matches assuming you already have 1 line of data, deprecated, please see match_crawler
 	"""
 
 	#Generate a set of recorded matches
@@ -151,9 +181,8 @@ def match_crawler(input_csv, starting_puuid, n):
 			puuid = random.choice(chosen_col)
 			continue		
 
-# while True:
-df_open = pd.read_csv("training_dataset.csv")
-puuid_picker = random.choice(df_open["p" + str(random.randint(1, 10)) + "_puuid"].tolist())
-match_crawler("training_dataset.csv", puuid_picker, 5)
-print("Pull successful.")
-	# time.sleep(120)
+while True:
+	for i in range(20):
+		match_crawler("test.csv")
+	print("pull success")
+	time.sleep(120)
