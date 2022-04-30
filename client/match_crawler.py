@@ -151,9 +151,9 @@ def match_crawler(input_csv, starting_puuid, n):
 			puuid = random.choice(chosen_col)
 			continue		
 
-while True:
-	df_open = pd.read_csv("training_dataset.csv")
-	puuid_picker = random.choice(df_open["p" + str(random.randint(1, 10)) + "_puuid"].tolist())
-	match_crawler("training_dataset.csv", puuid_picker, 20)
-	print("Pull successful.")
-	time.sleep(120)
+# while True:
+df_open = pd.read_csv("training_dataset.csv")
+puuid_picker = random.choice(df_open["p" + str(random.randint(1, 10)) + "_puuid"].tolist())
+match_crawler("training_dataset.csv", puuid_picker, 5)
+print("Pull successful.")
+	# time.sleep(120)

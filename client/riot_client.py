@@ -6,12 +6,17 @@ import random
 import json
 import os.path
 import time
+import argparse
 
 #checks if riot_api_key exists in environment variables
-if ("riot_api_key" not in os.environ):
-	raise Exception("Riot API key does not exist. Please set a key as riot_api_key = your_key in environment variables")
-else:
-	dev_key = os.environ["riot_api_key"]
+# if ("riot_api_key" not in os.environ):
+# 	raise Exception("Riot API key does not exist. Please set a key as riot_api_key = your_key in environment variables")
+# else:
+# 	dev_key = os.environ["riot_api_key"]
+parser = argparse.ArgumentParser()
+parser.add_argument('--dev_key', type=str, help='Riot API key')
+args = parser.parse_args()
+dev_key = args.dev_key
 
 def get_player_ids(summoner_name):
 	"""
